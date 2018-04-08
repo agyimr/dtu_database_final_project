@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{5E21030F-90ED-4C7B-A78F-C034CBF99ED4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLScriptGenerator", "ClassLibrary1\SQLScriptGenerator.csproj", "{16D9E367-ED88-4D7A-A4EF-95678C97C52F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5E21030F-90ED-4C7B-A78F-C034CBF99ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E21030F-90ED-4C7B-A78F-C034CBF99ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E21030F-90ED-4C7B-A78F-C034CBF99ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E21030F-90ED-4C7B-A78F-C034CBF99ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16D9E367-ED88-4D7A-A4EF-95678C97C52F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D9E367-ED88-4D7A-A4EF-95678C97C52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D9E367-ED88-4D7A-A4EF-95678C97C52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D9E367-ED88-4D7A-A4EF-95678C97C52F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

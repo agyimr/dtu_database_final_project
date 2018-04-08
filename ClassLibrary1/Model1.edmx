@@ -1,0 +1,528 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="Recipe" EntityType="Model1.Store.Recipe" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="IngredientsUsed" EntityType="Model1.Store.IngredientsUsed" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Ingredient" EntityType="Model1.Store.Ingredient" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RecipeCategory" EntityType="Model1.Store.RecipeCategory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User" EntityType="Model1.Store.User" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RecipesSubmitted" EntityType="Model1.Store.RecipesSubmitted" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Rating" EntityType="Model1.Store.Rating" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Category" EntityType="Model1.Store.Category" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="IngredientIngredientsUsed" Association="Model1.Store.IngredientIngredientsUsed">
+      <End Role="Ingredient" EntitySet="Ingredient" />
+      <End Role="IngredientsUsed" EntitySet="IngredientsUsed" />
+    </AssociationSet>
+    <AssociationSet Name="RecipeIngredientsUsed" Association="Model1.Store.RecipeIngredientsUsed">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="IngredientsUsed" EntitySet="IngredientsUsed" />
+    </AssociationSet>
+    <AssociationSet Name="UserRecipesSubmitted" Association="Model1.Store.UserRecipesSubmitted">
+      <End Role="User" EntitySet="User" />
+      <End Role="RecipesSubmitted" EntitySet="RecipesSubmitted" />
+    </AssociationSet>
+    <AssociationSet Name="RatingUser" Association="Model1.Store.RatingUser">
+      <End Role="Rating" EntitySet="Rating" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="RatingRecipe" Association="Model1.Store.RatingRecipe">
+      <End Role="Rating" EntitySet="Rating" />
+      <End Role="Recipe" EntitySet="Recipe" />
+    </AssociationSet>
+    <AssociationSet Name="RecipesSubmittedRecipe" Association="Model1.Store.RecipesSubmittedRecipe">
+      <End Role="RecipesSubmitted" EntitySet="RecipesSubmitted" />
+      <End Role="Recipe" EntitySet="Recipe" />
+    </AssociationSet>
+    <AssociationSet Name="CategoryRecipeCategory" Association="Model1.Store.CategoryRecipeCategory">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="RecipeCategory" EntitySet="RecipeCategory" />
+    </AssociationSet>
+    <AssociationSet Name="RecipeCategoryRecipe" Association="Model1.Store.RecipeCategoryRecipe">
+      <End Role="RecipeCategory" EntitySet="RecipeCategory" />
+      <End Role="Recipe" EntitySet="Recipe" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Recipe">
+    <Key>
+      <PropertyRef Name="RecipeId" />
+    </Key>
+    <Property Name="RecipeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="longtext" Nullable="false" />
+    <Property Name="NumberOfPersons" Type="int" Nullable="false" />
+    <Property Name="PreparationTime" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IngredientsUsed">
+    <Key>
+      <PropertyRef Name="RecipeId" />
+      <PropertyRef Name="IngredientId" />
+    </Key>
+    <Property Name="Unit" Type="longtext" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="IngredientId" Type="int" Nullable="false" />
+    <Property Name="RecipeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ingredient">
+    <Key>
+      <PropertyRef Name="IngredientId" />
+    </Key>
+    <Property Name="IngredientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="longtext" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Calories" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RecipeCategory">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+      <PropertyRef Name="RecipeId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="RecipeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="longtext" Nullable="false" />
+    <Property Name="LastName" Type="longtext" Nullable="false" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RecipesSubmitted">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RecipeId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="RecipeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RecipeId" />
+    </Key>
+    <Property Name="RatingNum" Type="longtext" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="RecipeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="longtext" Nullable="false" />
+  </EntityType>
+  <Association Name="IngredientIngredientsUsed">
+    <End Role="Ingredient" Type="Model1.Store.Ingredient" Multiplicity="1" />
+    <End Role="IngredientsUsed" Type="Model1.Store.IngredientsUsed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingredient">
+        <PropertyRef Name="IngredientId" />
+      </Principal>
+      <Dependent Role="IngredientsUsed">
+        <PropertyRef Name="IngredientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RecipeIngredientsUsed">
+    <End Role="Recipe" Type="Model1.Store.Recipe" Multiplicity="1" />
+    <End Role="IngredientsUsed" Type="Model1.Store.IngredientsUsed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Recipe">
+        <PropertyRef Name="RecipeId" />
+      </Principal>
+      <Dependent Role="IngredientsUsed">
+        <PropertyRef Name="RecipeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserRecipesSubmitted">
+    <End Role="User" Type="Model1.Store.User" Multiplicity="1" />
+    <End Role="RecipesSubmitted" Type="Model1.Store.RecipesSubmitted" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="RecipesSubmitted">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RatingUser">
+    <End Role="Rating" Type="Model1.Store.Rating" Multiplicity="*" />
+    <End Role="User" Type="Model1.Store.User" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RatingRecipe">
+    <End Role="Rating" Type="Model1.Store.Rating" Multiplicity="*" />
+    <End Role="Recipe" Type="Model1.Store.Recipe" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Recipe">
+        <PropertyRef Name="RecipeId" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="RecipeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RecipesSubmittedRecipe">
+    <End Role="RecipesSubmitted" Type="Model1.Store.RecipesSubmitted" Multiplicity="*" />
+    <End Role="Recipe" Type="Model1.Store.Recipe" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Recipe">
+        <PropertyRef Name="RecipeId" />
+      </Principal>
+      <Dependent Role="RecipesSubmitted">
+        <PropertyRef Name="RecipeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CategoryRecipeCategory">
+    <End Role="Category" Type="Model1.Store.Category" Multiplicity="1" />
+    <End Role="RecipeCategory" Type="Model1.Store.RecipeCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="RecipeCategory">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RecipeCategoryRecipe">
+    <End Role="RecipeCategory" Type="Model1.Store.RecipeCategory" Multiplicity="*" />
+    <End Role="Recipe" Type="Model1.Store.Recipe" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Recipe">
+        <PropertyRef Name="RecipeId" />
+      </Principal>
+      <Dependent Role="RecipeCategory">
+        <PropertyRef Name="RecipeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Recipe" EntityType="Model1.Recipe" />
+          <EntitySet Name="IngredientsUsed" EntityType="Model1.IngredientsUsed" />
+          <EntitySet Name="Ingredient" EntityType="Model1.Ingredient" />
+          <AssociationSet Name="IngredientIngredientsUsed" Association="Model1.IngredientIngredientsUsed">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="IngredientsUsed" EntitySet="IngredientsUsed" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeIngredientsUsed" Association="Model1.RecipeIngredientsUsed">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="IngredientsUsed" EntitySet="IngredientsUsed" />
+          </AssociationSet>
+          <EntitySet Name="RecipeCategory" EntityType="Model1.RecipeCategory" />
+          <EntitySet Name="User" EntityType="Model1.User" />
+          <EntitySet Name="RecipesSubmitted" EntityType="Model1.RecipesSubmitted" />
+          <AssociationSet Name="UserRecipesSubmitted" Association="Model1.UserRecipesSubmitted">
+            <End Role="User" EntitySet="User" />
+            <End Role="RecipesSubmitted" EntitySet="RecipesSubmitted" />
+          </AssociationSet>
+          <EntitySet Name="Rating" EntityType="Model1.Rating" />
+          <AssociationSet Name="RatingUser" Association="Model1.RatingUser">
+            <End Role="Rating" EntitySet="Rating" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="RatingRecipe" Association="Model1.RatingRecipe">
+            <End Role="Rating" EntitySet="Rating" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <AssociationSet Name="RecipesSubmittedRecipe" Association="Model1.RecipesSubmittedRecipe">
+            <End Role="RecipesSubmitted" EntitySet="RecipesSubmitted" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <EntitySet Name="Category" EntityType="Model1.Category" />
+          <AssociationSet Name="CategoryRecipeCategory" Association="Model1.CategoryRecipeCategory">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="RecipeCategory" EntitySet="RecipeCategory" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeCategoryRecipe" Association="Model1.RecipeCategoryRecipe">
+            <End Role="RecipeCategory" EntitySet="RecipeCategory" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="RecipeId" />
+          </Key>
+          <Property Name="RecipeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="NumberOfPersons" Type="Int32" Nullable="false" />
+          <Property Name="PreparationTime" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IngredientsUsed" >
+          <Key>
+            <PropertyRef Name="RecipeId" />
+            <PropertyRef Name="IngredientId" />
+          </Key>
+          <Property Name="Unit" Type="String" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="IngredientId" Type="Int32" Nullable="false" />
+          <Property Name="RecipeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IngredientId" />
+          </Key>
+          <Property Name="IngredientId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Calories" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="IngredientIngredientsUsed">
+          <End Type="Model1.Ingredient" Role="Ingredient" Multiplicity="1" />
+          <End Type="Model1.IngredientsUsed" Role="IngredientsUsed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IngredientId" />
+            </Principal>
+            <Dependent Role="IngredientsUsed">
+              <PropertyRef Name="IngredientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeIngredientsUsed">
+          <End Type="Model1.Recipe" Role="Recipe" Multiplicity="1" />
+          <End Type="Model1.IngredientsUsed" Role="IngredientsUsed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeId" />
+            </Principal>
+            <Dependent Role="IngredientsUsed">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RecipeCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="RecipeId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="RecipeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RecipesSubmitted" >
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RecipeId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RecipeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="UserRecipesSubmitted">
+          <End Type="Model1.User" Role="User" Multiplicity="1" />
+          <End Type="Model1.RecipesSubmitted" Role="RecipesSubmitted" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="RecipesSubmitted">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RecipeId" />
+          </Key>
+          <Property Name="RatingNum" Type="String" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RecipeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="RatingUser">
+          <End Type="Model1.Rating" Role="Rating" Multiplicity="*" />
+          <End Type="Model1.User" Role="User" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RatingRecipe">
+          <End Type="Model1.Rating" Role="Rating" Multiplicity="*" />
+          <End Type="Model1.Recipe" Role="Recipe" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeId" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipesSubmittedRecipe">
+          <End Type="Model1.RecipesSubmitted" Role="RecipesSubmitted" Multiplicity="*" />
+          <End Type="Model1.Recipe" Role="Recipe" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeId" />
+            </Principal>
+            <Dependent Role="RecipesSubmitted">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CategoryRecipeCategory">
+          <End Type="Model1.Category" Role="Category" Multiplicity="1" />
+          <End Type="Model1.RecipeCategory" Role="RecipeCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="RecipeCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeCategoryRecipe">
+          <End Type="Model1.RecipeCategory" Role="RecipeCategory" Multiplicity="*" />
+          <End Type="Model1.Recipe" Role="Recipe" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeId" />
+            </Principal>
+            <Dependent Role="RecipeCategory">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="Recipe">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Recipe)">
+        <MappingFragment StoreEntitySet="Recipe">
+          <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NumberOfPersons" ColumnName="NumberOfPersons" />
+          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IngredientsUsed">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.IngredientsUsed)">
+        <MappingFragment StoreEntitySet="IngredientsUsed">
+          <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+          <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ingredient">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Ingredient)">
+        <MappingFragment StoreEntitySet="Ingredient">
+          <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Calories" ColumnName="Calories" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RecipeCategory">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.RecipeCategory)">
+        <MappingFragment StoreEntitySet="RecipeCategory">
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.User)">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RecipesSubmitted">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.RecipesSubmitted)">
+        <MappingFragment StoreEntitySet="RecipesSubmitted">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rating">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Rating)">
+        <MappingFragment StoreEntitySet="Rating">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+          <ScalarProperty Name="RatingNum" ColumnName="RatingNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Category">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Category)">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToMySQL.tt" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
