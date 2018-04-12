@@ -77,10 +77,10 @@ INSERT INTO ingredientsused (RecipeId, IngredientId, Amount) VALUES
 INSERT INTO recipecategory (CategoryId, RecipeId) VALUES (2,4);
 
 -- Butternutsquash now have every attribute but rating
-SELECT Name, RecipeRating(Name) AS Rating FROM Recipe ORDER BY Name;
+SELECT Name, RecipeRating(RecipeId) AS Rating FROM Recipe ORDER BY Name;
 
 -- writing th procedure the event will call
-DROP PROCEDURE IF EXISTS DeleteBadRecipes()
+DROP PROCEDURE IF EXISTS DeleteBadRecipes;
 DELIMITER //
 CREATE PROCEDURE DeleteBadRecipes()
 BEGIN
@@ -88,12 +88,25 @@ BEGIN
     SELECT RecipeId 
     FROM Recipe
     WHERE RecipeRating(RecipeId) BETWEEN 0 AND 1);
-    DELETE FROM Recipe WHERE RecipeId IN (@badRecipeIDs);
     DELETE FROM RecipeCategory WHERE RecipeId IN (@badRecipeIDs);
     DELETE FROM RecipesSubmitted WHERE RecipeID IN (@badRecipeIDs);
     DELETE FROM IngredientsUsed WHERE RecipeID IN (@badRecipeIDs);
+    DELETE FROM Rating WHERE RecipeId IN (@badRecipeIDs);
+	DELETE FROM Recipe WHERE RecipeId IN (@badRecipeIDs);
 END//
 DELIMITER ;
+
+-- Test nothing is deleted
+CALL DeleteBadRecipes();
+SELECT Name, RecipeRating(RecipeId) AS Rating FROM Recipe ORDER BY Name;
+
+-- Adding a rating to curry chicken so it should be deleted
+INSERT INTO rating (RatingNum, UserId, RecipeId) VALUES (1,2,4);
+-- checking rating
+SELECT Name, RecipeRating(RecipeId) AS Rating FROM Recipe ORDER BY Name;
+-- check it gets deleted
+CALL DeleteBadRecipes();
+SELECT Name, RecipeRating(RecipeId) AS Rating FROM Recipe ORDER BY Name;
     
 -- Binding the procedure to an event that runs the first of every month   
 DROP EVENT IF EXISTS DeleteBadRecipesEvent; 
