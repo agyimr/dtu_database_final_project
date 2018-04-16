@@ -55,17 +55,6 @@ BEGIN
 END;//
 DELIMITER ;
 
--- Data before backup
-SELECT * FROM Recipe;
-SELECT * FROM RecipeOld;
-
-CALL RecipeBackup;
-
--- Data after backup.
-SELECT * FROM Recipe;
-SELECT * FROM RecipeOld;
-
-
 CREATE EVENT BackupEvent
 ON SCHEDULE EVERY 1 MONTH
 STARTS '2018-05-01 00:00:00'
