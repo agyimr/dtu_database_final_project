@@ -2,7 +2,7 @@ USE databasesys;
 
 -- Group by example
 -- Count how many time each ingredient is used  in all recipes
-SELECT i.Name, SUM(iu.Amount) as NumberOfTimesUsed
+SELECT i.Name, SUM(iu.Amount) AS NumberOfTimesUsed
 FROM Ingredient i INNER JOIN  IngredientsUsed iu INNER JOIN Recipe r
 WHERE i.IngredientId = iu.IngredientId AND r.RecipeId = iu.RecipeId
 GROUP BY i.Name;
