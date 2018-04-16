@@ -11,7 +11,12 @@ DROP PROCEDURE IF EXISTS RecipeBackup;
 -- Creating backup table.
 CREATE TABLE RecipeOld LIKE Recipe;
 ALTER TABLE RecipeOld 
-	ADD BackupTime TIMESTAMP(6);
+	ADD BackupTime TIMESTAMP(6),
+	DROP PRIMARY KEY,
+	DROP INDEX RecipeId,
+	ADD PRIMARY KEY(RecipeId, BackupTime),
+	ADD UNIQUE (RecipeId, BackupTime);
+	
 	
 -- Creating backup procedure for RecipeTable 
 DELIMITER //
@@ -24,8 +29,7 @@ BEGIN
 			vSQLSTATE = RETURNED_SQLSTATE;
 		END;
 	START TRANSACTION;
-	DELETE FROM RecipeOld;
-	INSERT INTO RecipeOLD SELECT *, NOW(6) FROM Recipe;
+	INSERT INTO RecipeOld SELECT *, NOW(6) FROM Recipe;
 	IF vSQLSTATE = '00000' THEN COMMIT;
 		ELSE ROLLBACK;
 	END IF;
