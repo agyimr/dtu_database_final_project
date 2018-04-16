@@ -11,7 +11,7 @@ SELECT Name, CategoryName from Recipe
 -- Likewise We can get categories and the corresponding recipes while keeping the categories which has no Recipes yet.
 SELECT CategoryName, Name FROM Category 
 	LEFT OUTER JOIN RecipeCategory rc ON Category.CategoryId = rc.CategoryId
-	LEFT OUTER JOIN Recipe r ON r.RecipeId = rc.CategoryId;
+	LEFT OUTER JOIN Recipe r ON r.RecipeId = rc.RecipeId;
 
 
 
