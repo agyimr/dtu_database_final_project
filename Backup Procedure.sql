@@ -19,8 +19,8 @@ ALTER TABLE RecipeOld
 	ADD PRIMARY KEY(RecipeId, BackupTime),
 	ADD UNIQUE (RecipeId, BackupTime);
 	
-CREATE TABLE IngredientsOld LIKE Ingredient;
-ALTER TABLE IngredientsOld 
+CREATE TABLE IngredientOld LIKE Ingredient;
+ALTER TABLE IngredientOld 
 	ADD BackupTime TIMESTAMP(6),
 	DROP PRIMARY KEY,
 	DROP INDEX IngredientId,
@@ -46,9 +46,10 @@ BEGIN
 			vSQLSTATE = RETURNED_SQLSTATE;
 		END;
 	START TRANSACTION;
-	INSERT INTO RecipeOld SELECT *,NOW(6) FROM Recipe;
-	INSERT INTO IngredientsOld SELECT *,NOW(6) FROM Ingredient;
-	INSERT INTO IngredientsUsedOld SELECT *,NOW(6) FROM IngredientsUsed;
+	SET @t = NOW(6);
+	INSERT INTO RecipeOld SELECT *,@t FROM Recipe;
+	INSERT INTO IngredientOld SELECT *,@t FROM Ingredient;
+	INSERT INTO IngredientsUsedOld SELECT *,@t FROM IngredientsUsed;
 	IF vSQLSTATE = '00000' THEN COMMIT;
 		ELSE ROLLBACK;
 	END IF;
