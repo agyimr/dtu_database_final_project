@@ -15,20 +15,20 @@ INSERT INTO Category(CategoryName) VALUES ('Vegetarian');
 -- Calorie calculation function
 DROP FUNCTION IF EXISTS CaloriesInRecipe;
 DELIMITER //
-CREATE FUNCTION CaloriesInRecipe(vRecipeName VARCHAR(255)) RETURNS INT
+CREATE FUNCTION CaloriesInRecipe(vRecipeID INT) RETURNS INT
 BEGIN
 	DECLARE vCalories INT;
     SELECT SUM(i.Calories*iu.Amount) INTO vCalories
     FROM Recipe r INNER JOIN IngredientsUsed iu 
     INNER JOIN Ingredient i
-    WHERE r.Name = vRecipeName AND r.RecipeID = iu.RecipeID 
+    WHERE r.RecipeId = vRecipeID AND r.RecipeID = iu.RecipeID 
     AND iu.IngredientId = i.IngredientID;
     RETURN vCalories;
 END; //
 DELIMITER ;
 
 -- Testing that the function works
-SELECT Name, CaloriesInRecipe(Name) AS Calories FROM Recipe ORDER BY Name;
+SELECT Name, CaloriesInRecipe(RecipeId) AS Calories FROM Recipe ORDER BY Name;
 
 -- Selecting Ingredients in recipe and amount to see if calculation is correct (it is)
 SELECT r.Name, i.Name, iu.Amount, i.Calories AS CaloriesPrAmount
@@ -38,9 +38,9 @@ ORDER BY r.Name;
 
 -- Using Calories function to only see recipes where total calories are less than 1000
 -- Testing that the function works
-SELECT Name, CaloriesInRecipe(Name) AS Calories 
+SELECT Name, CaloriesInRecipe(RecipeId) AS Calories 
 FROM Recipe 
-WHERE CaloriesInRecipe(Name) < 1000;
+WHERE CaloriesInRecipe(RecipeId) < 1000;
 
 -- We only want to keep good recipes in our database, so every month we want to delete recipes
 -- with a rating lower than 1 (we will keep recipes with no rating though)
@@ -119,3 +119,12 @@ DO CALL DeleteBadRecipes();
 SET GLOBAL event_scheduler = 1;
 -- checking it's turned on
 SHOW VARIABLES LIKE 'event_scheduler';
+
+-- Looking directly at the recipe table is not very user friendly. We don't want to have duplicate data though
+-- So we are going to create a view for users which will use the data stored in Recipe, rating and ingredient
+CREATE VIEW RecipeUserView AS 
+SELECT r.Name, r.NumberOfPersons, r.PreparationTime, CaloriesInRecipe(r.RecipeId) AS 'Calories pr 100g', RecipeRating(r.RecipeId) AS Rating 
+FROM Recipe r; 
+
+-- Selecting the view to test it
+SELECT * FROM RecipeUserView;
